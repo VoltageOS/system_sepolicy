@@ -20,6 +20,10 @@ until_board_api(202504, `
 attribute sdk_sandbox_all;
 # The SDK sandbox domains for the current SDK level.
 attribute sdk_sandbox_current;
+
+# All types used for sdcard_posix context= mounts.
+attribute sdcard_posix_contextmount_type;
+
 # Common to adbd and adbd_tradeinmode.
 attribute adbd_common;
 
