@@ -23,6 +23,7 @@ neverallow {
   -installd
   -iorap_prefetcherd
   -iorap_inode2filename
+  -mediaprovider_app
   -system_server
   -adbd
   -runas
