@@ -1001,6 +1001,8 @@ get_prop(system_server, mmd_shared_prop)
 # Allow system server to read device-specific USB APM properties
 get_prop(system_server, usb_disable_when_locked_prop)
 
+set_prop(system_server, security_usb_mode_prop)
+
 # Allow system server to read build properties for bootimage partition.
 get_prop(system_server, build_bootimage_prop)
 
