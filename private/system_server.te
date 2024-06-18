@@ -970,6 +970,7 @@ get_prop(system_server, mmd_shared_prop)
 get_prop(system_server, usb_disable_when_locked_prop)
 
 set_prop(system_server, security_usb_mode_prop)
+set_prop(system_server, deny_new_usb2_prop)
 
 # Allow system server to read build properties for bootimage partition.
 get_prop(system_server, build_bootimage_prop)
