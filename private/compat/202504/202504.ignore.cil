@@ -5,6 +5,7 @@
 (typeattribute new_objects)
 (typeattributeset new_objects
   ( new_objects
+    port_security_mode_prop
     aisealhostservice
     aiseal_data_file
     binderfs_logs_state_hashed

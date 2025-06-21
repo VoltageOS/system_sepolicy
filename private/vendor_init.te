@@ -8,6 +8,7 @@ allow vendor_init system_data_root_file:dir rw_dir_perms;
 
 # Let vendor_init set service.adb.tcp.port.
 set_prop(vendor_init, adbd_config_prop)
+get_prop(vendor_init, port_security_mode_prop)
 
 # Let vendor_init set RKP properties
 set_prop(vendor_init, remote_prov_prop)
