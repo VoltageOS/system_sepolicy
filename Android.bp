@@ -90,6 +90,16 @@ se_build_files {
     srcs: ["technical_debt.cil"],
 }
 
+se_build_files {
+    name: "sepolicy_ext_cil",
+    srcs: ["sepolicy_ext.cil"],
+}
+
+se_build_files {
+    name: "sepolicy_ext_recovery_cil",
+    srcs: ["sepolicy_ext_recovery.cil"],
+}
+
 phony {
     // Currently used only for aosp_cf_system_x86_64
     // TODO(b/329208946): migrate selinux_policy_system to Soong
@@ -224,6 +234,7 @@ se_policy_cil {
     name: "system_ext_pub_policy.cil",
     src: ":system_ext_pub_policy.conf",
     filter_out: [":reqd_policy_mask.cil"],
+    additional_cil_files: [":sepolicy_ext_cil{.system_ext_public}"],
     secilc_check: false,
     system_ext_specific: true,
     installable: false,
@@ -330,6 +341,7 @@ se_policy_conf {
 se_policy_cil {
     name: "system_ext_sepolicy.cil",
     src: ":system_ext_sepolicy.conf",
+    additional_cil_files: [":sepolicy_ext_cil{.system_ext_private}"],
     system_ext_specific: true,
     filter_out: [":plat_sepolicy.cil"],
 }
@@ -352,6 +364,7 @@ se_policy_conf {
 se_policy_cil {
     name: "product_sepolicy.cil",
     src: ":product_sepolicy.conf",
+    additional_cil_files: [":sepolicy_ext_cil{.product_private}"],
     product_specific: true,
     filter_out: [
         ":plat_sepolicy.cil",
@@ -431,6 +444,7 @@ se_policy_cil {
     name: "vendor_sepolicy.cil.raw",
     src: ":vendor_sepolicy.conf",
     filter_out: [":reqd_policy_mask.cil"],
+    additional_cil_files: [":sepolicy_ext_cil{.vendor}"],
     secilc_check: false, // will be done in se_versioned_policy module
     vendor: true,
     installable: false,
@@ -473,6 +487,7 @@ se_policy_conf {
 se_policy_cil {
     name: "odm_sepolicy.cil.raw",
     src: ":odm_sepolicy.conf",
+    additional_cil_files: [":sepolicy_ext_cil{.odm}"],
     filter_out: [
         ":reqd_policy_mask.cil",
         ":vendor_sepolicy.cil.raw",
@@ -718,6 +733,7 @@ precompiled_se_policy_binary {
     permissive_domains_on_user_builds: ["backuptool"],
 }
 
+
 // policy for recovery
 se_policy_conf {
     name: "recovery_sepolicy.conf",
@@ -740,6 +756,14 @@ se_policy_conf {
 se_policy_cil {
     name: "recovery_sepolicy.cil",
     src: ":recovery_sepolicy.conf",
+    additional_cil_files: [
+        ":sepolicy_ext_cil{.system_ext_public}",
+        ":sepolicy_ext_cil{.system_ext_private}",
+        ":sepolicy_ext_cil{.product_public}",
+        ":sepolicy_ext_cil{.product_private}",
+        ":sepolicy_ext_recovery_cil{.vendor}",
+        ":sepolicy_ext_cil{.odm}",
+    ],
     secilc_check: false, // will be done in se_policy_binary module
     installable: false,
     recovery: true,
@@ -827,7 +851,7 @@ se_policy_conf {
 se_policy_cil {
     name: "base_product_sepolicy.cil",
     src: ":base_product_sepolicy.conf",
-    additional_cil_files: ["private/technical_debt.cil"],
+    additional_cil_files: ["private/technical_debt.cil",":sepolicy_ext_cil{.product_public}"],
     product_specific: true,
     installable: false,
     secilc_check: false, // done by se_policy_binary
